@@ -5,11 +5,14 @@ import configs from 'config';
 import formSubmittionRouter from 'routes/formSubmittionRouter';
 import cors from 'cors';
 configs();
+
+const PORT: number = parseInt(process.env.PORT!, 10);
+
 const app: Application = express();
 
 app.use(
     cors({
-        origin: 'http://localhost:5173',
+        origin: ['http://localhost:5173', 'https://dynamic-form-client.vercel.app'],
     })
 );
 
@@ -26,7 +29,7 @@ app.get('/health', (req, res) => {
 
 app.use(errorMiddleware);
 
-app.listen(process.env.PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server is running on http://localhost:${process.env.PORT}`);
 });
 
