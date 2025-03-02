@@ -12,7 +12,7 @@ const app: Application = express();
 
 app.use(
     cors({
-        origin: ['http://localhost:5173', 'https://dynamic-form-server.onrender.com'],
+        origin: ['http://localhost:5173', 'https://dynamic-form-client.vercel.app'],
     })
 );
 
