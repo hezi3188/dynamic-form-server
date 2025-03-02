@@ -1,21 +1,24 @@
-import { configDotenv } from 'dotenv';
 import express, { Application } from 'express';
 import { errorMiddleware } from './middelwares/errorMiddelware';
-import { StatusCodes } from 'http-status-codes';
 import loggerMiddleware from 'middelwares/loggerMiddelware';
-import { AppError } from 'classes/AppError';
-
-configDotenv();
+import configs from 'config';
+import formSubmittionRouter from 'routes/formSubmittionRouter';
+import cors from 'cors';
+configs();
 const app: Application = express();
+
+app.use(
+    cors({
+        origin: 'http://localhost:5173',
+    })
+);
 
 // Middleware
 app.use(express.json());
 app.use(loggerMiddleware);
 
 // Routes
-app.get('/error', (req, res) => {
-    throw new AppError('This is an error message', StatusCodes.NOT_FOUND);
-});
+app.use('/formSubmittion', formSubmittionRouter);
 
 app.get('/health', (req, res) => {
     res.send('Server is up and running');
